@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>đăng ký</h1>
+    <form action="#" name="register-form">
+        <div>Username: <input type="text" name="username"></div>
+        <div>Password: <input type="password" name="password"></div>
+        <div>Confirm Password: <input type="password" name="confirmPassword"></div>
+        <div>
+            <input type="button" value="Save" name="btn-submit">
+            <input type="reset" value="Reset">
+        </div>
+    </form>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var registerApiUrl = 'http:locahost:8080/api/v1/register';
+        document.forms(['register-form']['btn-submit'].onclick = function () {
+            var username = document.forms['register-form'][username].value;
+            var password = document.forms['register-form'][password].value;
+            var confirmPassword = document.forms['register-form'][confirmPassword].value;
+            if(password !=confirmPassword){
+                alert('sai rồi!!!!');
+                return;
+            }
+            var obj = {
+                "username": username,
+                "password":password
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('đăng nhập thành công!!!');
+                    window.location.href = '/login.html';
+                }
+            };
+            xhr.open('POST',registerApiUrl, false);
+            xhr.setRequestHeader('Content-type','application/json');
+            xhr.send(JSON.stringify(obj));
+
+        })
+    })
+</script>
+
+</html>

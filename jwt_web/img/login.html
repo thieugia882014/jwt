@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>đăng nhập</h1>
+    <form action="#" name="login-form">
+        <div>Username: <input type="text" name="username"></div>
+        <div>Password: <input type="password" name="password"></div>
+        <div>
+            <input type="button" value="Save" name="btn-submit">
+            <input type="reset" value="Reset">
+        </div>
+    </form>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var loginApiUrl = 'http:locahost:8080/api/v1/login';
+        document.forms(['login-form']['btn-submit'].onclick = function () {
+            var username = document.forms['login-form'][username].value;
+            var password = document.forms['login-form'][password].value;
+            var obj = {
+                "username": username,
+                "password":password
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('đăng nhập thành công!!!');
+                    window.location.href = '/user-article.html';
+                }
+            };
+            xhr.open('POST',registerApiUrl, false);
+            xhr.setRequestHeader('Content-type','application/json');
+            xhr.send(JSON.stringify(obj));
+
+        })
+    })
+</script>
+
+</html>

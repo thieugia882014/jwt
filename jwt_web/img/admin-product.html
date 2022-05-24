@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Admin product</h1>
+    <ul id="articles"></ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var token = localStorage.getItem('token');
+            if (token === null || token === undefined) {
+                alert('làm ơn đăng nhập để tiếp tục!');
+                window.location.href = '/login.html';
+            }
+            var apiUrl = 'http:locahost:8080/api/v1/admin/product';
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var jsonObject = JSON.parse(xhr.responseText);
+                        var listArticle = document.getElementById('articles');
+                        var content = ``;
+                        for (var i = 1; i < jsonObject.length; i++) {
+                            content += `<li>${jsonObject[i].name}</li>`;
+                        }
+                        listArticle.innerHTML = content;
+                    } else if (xhr.status == 403) {
+                        localStorage.removeItem('token');
+                        alert('đăng nhập đê');
+                        window.location.href = '/login.html';
+                    }
+
+                }
+            };
+            xhr.open('GET', registerApiUrl, false);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('Authorization', 'Bearer' + token);
+            xhr.send();
+
+        })
+    </script>
+</body>
+
+</html>
